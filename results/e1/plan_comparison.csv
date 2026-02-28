@@ -1,0 +1,3 @@
+plan,narrative_policy,gfs_policy,narrative_hv_point,gfs_hv_point,aggregate_hv_point_mean,aggregate_flourish_mean,aggregate_utility_mean
+A_global_anchor,anchor_baseline,anchor_baseline,0.01215481966429451,0.010657342945453214,0.011406081304873862,0.027392302021965437,0.42113826298688156
+BplusC_regime_conditioned,grid_a1p5_rp0p5_b3p0,promote_frontier_alpha15_boost30,0.17747802651320302,0.03218287393829429,0.10483045022574866,0.29579345532828233,0.36674251728607044
