@@ -1,52 +1,61 @@
 # HISTORY.md — RegimeFrontierLab Development Log
 
-This file tracks the major phases, architectural decisions, empirical learnings, and pivots in the RegimeFrontierLab project (memetic gelation / symbiogenesis simulator + AI safety transfer).
+This file tracks major phases, architectural decisions, empirical learnings, and pivots in RegimeFrontierLab (memetic gelation / symbiogenesis simulator + AI safety transfer).
 
-## 2026-02-xx — Project Initialization & Symbiogenesis Core
-- Started with symbiogenesis-inspired toy model (`mysterium/sim_memetic_gelation.py`)
-- Core mechanics: token/motif soup, fusion/merger dynamics, graph-based LCC tracking, resource caps, replication
-- Initial metrics: `lcc_fraction`, `type_entropy`, `stable_mass_fraction`
-- Early insight: Fusion (not mutation) is the dominant driver of sustained connectivity (Lesson #1)
+## Early Feb 2026 (Week 1) — Project Initialization & Symbiogenesis Core
+- Started with a symbiogenesis-inspired toy model (`src/sim_memetic_gelation.py`).
+- Core mechanics: token/motif soup, fusion/merge dynamics, graph-based LCC tracking, resource caps, replication.
+- Initial metrics: `lcc_fraction`, `type_entropy`, `stable_mass_fraction`.
+- Early insight: fusion (not mutation) is the dominant driver of sustained connectivity (Lesson #1).
+- Reference scripts/results: early baselines in `scripts/` and `results/`.
 
-## 2026-02-xx — Metric & Controller Refinements
-- Added nontrivial persistence metric (`stable_nontrivial_mass_fraction`) after monomer artifact discovered (Lesson #5)
-- Introduced hub/risk telemetry: `hub_gini`, `hub_top5_degree_share`, `risk_mass_fraction`, `risk_lcc_fraction`
-- Implemented first intervention ladder: baseline, soft, targeted prune modes
-- Pilot v1 results: Targeted prune strongly reduced risk proxy with minimal LCC movement
+## Mid Feb 2026 (Week 2) — Metric & Controller Refinements
+- Added nontrivial persistence metric: `stable_nontrivial_mass_fraction` after monomer artifact discovery (Lesson #5).
+- Introduced hub/risk telemetry: `hub_gini`, `hub_top5_degree_share`, `risk_mass_fraction`, `risk_lcc_fraction`.
+- Implemented first intervention ladder: baseline, soft, targeted prune modes.
+- Pilot v1 finding: targeted prune strongly reduced risk proxy with minimal LCC movement.
+- Reference: `scripts/run_followup_gfs_patch_ab_v1.py`.
 
-## 2026-02-xx — Universality & External Eval
-- U1: Replication matrix across configs
-- U2: Intervention invariance across internal text datasets
-- HF adversarial eval v1: Prompt-injection corpora (3 datasets, 2000 rows each)
-- Targeted variants drove `risk_mass_fraction` → 0.0 with small LCC shift
-- Semantic proxy weak → flagged as bottleneck
+## Mid–Late Feb 2026 (Week 3) — Universality & External Evaluation
+- **U1** (Universality Test 1): replication matrix across controller configs.
+- **U2** (Universality Test 2): intervention invariance across internal text datasets.
+- **HF adversarial eval v1** (HuggingFace prompt-injection corpora): 3 datasets, ~2000 rows each.
+- Targeted variants drove `risk_mass_fraction` toward 0.0 with small LCC shift.
+- Identified bottleneck: semantic risk proxy sensitivity/coverage lagged lexical controls.
+- Reference: `scripts/run_targeted_followup_gfs_e1_e2_v1.py` (later consolidated package).
 
-## 2026-02-xx — Flourishing Pivot & Positive Control
-- Shifted focus to positive motif promotion (coop_score boost during replication)
-- Tested gentle promotion, staged generation, fusion affinity modulation
-- Repeated clean negatives → revealed framing mismatch: incompatible objectives on adversarial corpora
+## Late Feb 2026 (Week 4) — Flourishing Pivot & Positive Control
+- Shifted from pure suppression to positive motif promotion (coop-score-weighted replication).
+- Tested: gentle promotion, staged generation, fusion affinity modulation.
+- Repeated clean negatives highlighted a framing mismatch:
+  - adversarial corpora optimize for suppression robustness,
+  - flourishing objective requires merge-compatible prosocial motif scaffolding.
+- Conclusion: same controller could not simultaneously maximize both regimes without explicit tradeoff handling.
+- References: `scripts/run_followup_gfs_frontier_push_v1.py`, `results/e2/*`.
 
-## 2026-02-xx — Pareto Frontier Pivot (Current Regime)
-- Abandoned binary gates → adopted Pareto frontier analysis (risk↓ vs utility retention vs flourishing retention)
-- Dual-environment eval: adversarial (safety stress) vs prosocial/neutral (flourishing capacity)
-- Policy families: safety-first, balanced, flourish-first
-- Key result: No global optimum; real tradeoffs
-- Library/narrative env most tractable for flourishing (highest HV 0.1043)
-- GFS env near-degenerate (HV 0.0109)
-- Safety-selected policy transfers well to narrative flourishing (+0.3508 Δflourish) but weakly to GFS (+0.0742)
-- Latest: Frontier push on patched GFS corpus → +24.6% HV uplift while safety-nonworse
+## Late Feb 2026 (Week 4) — Pareto Frontier Pivot (Current Regime)
+- Replaced binary pass/fail framing with Pareto frontier analysis (risk↓ vs utility retention vs flourishing retention).
+- Evaluated dual environments: adversarial (safety stress) vs prosocial/neutral (flourishing capacity).
+- Policy families compared: safety-first, balanced, flourish-first.
+- Key result: no single global optimum; real, unavoidable tradeoffs.
+- Library/narrative environment: highest tractability for flourishing (HV 0.1043).
+- GFS environment: near-degenerate frontier (HV 0.0109) under current representation.
+- Transfer is partial: safety-selected policy yielded strong narrative flourishing gains (+0.3508 Δflourish) but weak GFS lift (+0.0742).
+- Frontier push on patched GFS corpus delivered +24.6% HV uplift while safety-nonworse.
+- References: `results/e1/summary.csv`, `results/e1/frontier_pareto.csv`, `results/e1/plan_comparison.csv`, `results/e2/summary_with_ci.csv`.
 
 ## Lessons (Model-Bounded)
-1. Fusion drives connectivity; no-fusion regimes collapse
-2. Source composition strongly shapes attractor / diversity dynamics
-3. Real tradeoffs exist — no universal improvement lever
-4. Narrative sources scaffold bridging better than technical/reflective
-5. Metrics matter — wrong persistence metric hides true effects
-6. Claims remain simulator + corpora specific; no universal biological/AI proof
+1. Fusion drives connectivity; no-fusion regimes collapse.
+2. Source composition strongly shapes attractor/diversity dynamics.
+3. Real tradeoffs exist; no universal improvement lever appears in current model.
+4. Narrative sources scaffold cooperative bridging better than technical/reflective sources.
+5. Metrics matter: incorrect persistence proxies can hide true effects.
+6. Claims remain simulator + corpus specific; no universal biological/AI proof is implied.
 
 ## Next Horizon (as of 2026-02-27)
-- Contextual gating across policy families
-- Representation refinement for GFS-style abstract flourishing
-- Deeper transfer testing (safety → prosocial, prosocial → safety)
+- Contextual gating across policy families.
+- Representation refinement for GFS-style abstract flourishing.
+- Deeper transfer testing (safety→prosocial, prosocial→safety).
+- Larger-seed confirmatory passes with CIs before hard recommendations.
 
-This log will be updated after each major cycle or insight.
+This log is updated after each major cycle or methodological pivot.
