@@ -52,5 +52,8 @@ Each run should emit:
 - safety envelope checks,
 - receipts/manifests.
 
+## Project history
+See `HISTORY.md` for the development timeline, pivots, and model-bounded lessons learned.
+
 ## License
 MIT (see `LICENSE`).
